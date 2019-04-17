@@ -1,0 +1,11 @@
+$VMsinCluster = Get-VM
+
+foreach ($VM in $VMsinCluster)
+{
+    $VMDrive = Get-VMDvdDrive -VM $VM
+    if ($VMDrive.DvdMediaType -eq "ISO") 
+    {
+        Write-Host "Removing ISO from" $VMDrive.VMName
+        Get-VMDvdDrive -VM $VM | Set-VMDvdDrive -Path $null
+    }
+}
